@@ -5,29 +5,25 @@
     </Properties>
 
     <Appenders>
-        <RollingFile name="fileLogger" fileName="logs/trendyolProject.log"
-                     filePattern="logs/dailyLog-%d{yyyy-MM-dd}.log">
+        <RollingFile name="fileLogger" fileName="${basePath}/Mylogs1.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %msg%n</pattern>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
             </Policies>
         </RollingFile>
 
-        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
-            <PatternLayout> <!--%highlight{[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %msg%n}{FATAL=bg_red, ERROR=red bold, WARN=yellow, INFO=bright green, DEBUG=blue} -->
-                <pattern>%highlight{ - %msg%n}{FATAL=bg_red, ERROR=red bold, WARN=yellow, INFO=bright green, DEBUG=blue}</pattern>
-            </PatternLayout>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="Util" level="debug" additivity="true">
-            <appender-ref ref="fileLogger" level="debug"/>
+        <Logger name="com.howtodoinjava" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
         </Logger>
-        <Root level="debug" additivity="true">
-            <appender-ref ref="ConsoleAppender"/>
+        <Root level="debug" additivity="false">
+            <appender-ref ref="console" />
         </Root>
     </Loggers>
 </Configuration>
-        <!-- <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/> -->

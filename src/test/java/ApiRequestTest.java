@@ -13,7 +13,7 @@ public class ApiRequestTest extends BaseRequest {
         public void checkStoreEmty(){
 
             logger.info(" Check Store Empty");
-            emptyStore();
+            verifyEmptyStoreAtStarts();
 
         }
 
@@ -22,10 +22,10 @@ public class ApiRequestTest extends BaseRequest {
         public void titleAndAuthorCheckApiTest(){
 
             logger.info(" Check title required");
-            titleCheck();
+            verifyTitleRequired();
 
             logger.info(" Check Author required");
-            authorCheck();
+            verifyAuthorRequired();
         }
 
         //3
@@ -33,10 +33,10 @@ public class ApiRequestTest extends BaseRequest {
         public void titleAndAuthorEmptyCheckTest(){
 
             logger.info(" Check Emtpy Title ");
-            titleEmptyCheck();
+            verifyEmptyTitle();
 
             logger.info(" Check Empty Author ");
-            authorEmptyCheck();
+            verifyEmptyAuthor();
         }
 
         //4
@@ -44,7 +44,7 @@ public class ApiRequestTest extends BaseRequest {
         public void readOnlyIdApiTest(){
 
             logger.info(" Check Read Only ID");
-            ReadOnlyId();
+            verifyIDReadOnly();
 
         }
 
@@ -53,7 +53,7 @@ public class ApiRequestTest extends BaseRequest {
         public void newBookApiTest(){
 
             logger.info("Add New Book");
-            String bookId = newBook();
+            String bookId = verifyCreateNewBook();
 
             logger.info("Check Book");
             getBookingPath(bookId);

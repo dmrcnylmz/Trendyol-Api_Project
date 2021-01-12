@@ -3,12 +3,13 @@ package request;
 import Base.BaseRequest;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
 public class Request extends BaseRequest{
 
-        public static void emptyStore() {
+        public static void verifyEmptyStoreAtStarts() {
 
             Response response = given()
                     .headers(headersMapping())
@@ -25,13 +26,14 @@ public class Request extends BaseRequest{
 
         }
 
-        public static void titleCheck() {
+        public static void verifyTitleRequired() {
+
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("author", "Lorem Ipsum");
 
             Response titleCheckResponse = given()
                     .headers(headersMapping())
-                    .body("{ \n" +
-                            "  \"author\": \"Author Example\"\n" +
-                            "}")
+                    .body(requestParams.toString())
                     .log()
                     .all()
                     .when()
@@ -50,13 +52,14 @@ public class Request extends BaseRequest{
 
         }
 
-        public static void authorCheck() {
+        public static void verifyAuthorRequired() {
+
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("title", "Lorem Ipsum");
 
             Response authorCheckResponse = given()
                     .headers(headersMapping())
-                    .body("{ \n" +
-                            "  \"title\": \"Title Example\"\n" +
-                            "}")
+                    .body(requestParams.toString())
                     .log()
                     .all()
                     .when()
@@ -72,14 +75,15 @@ public class Request extends BaseRequest{
             Assert.assertEquals(authorResponseBody, authorCheckResponse.prettyPrint());
         }
 
-        public static void titleEmptyCheck() {
+        public static void verifyEmptyTitle() {
+
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("title", "");
+            requestParams.put("author","Lorem Ipsum");
 
             Response titleCheckResponse = given()
                     .headers(headersMapping())
-                    .body("{ \n" +
-                            "  \"author\": \"Example\", \n" +
-                            "  \"title\": \"\"\n" +
-                            "}")
+                    .body(requestParams.toString())
                     .log()
                     .all()
                     .when()
@@ -96,14 +100,15 @@ public class Request extends BaseRequest{
 
         }
 
-        public static void authorEmptyCheck() {
+        public static void verifyEmptyAuthor() {
+
+            JSONObject requestParams = new JSONObject();
+            requestParams.put("title", "Lorem Ipsum");
+            requestParams.put("author","");
 
             Response authorCheckResponse = given()
                     .headers(headersMapping())
-                    .body("{ \n" +
-                            "  \"author\": \"\", \n" +
-                            "  \"title\": \"Example\"\n" +
-                            "}")
+                    .body(requestParams.toString())
                     .log()
                     .all()
                     .when()
@@ -119,15 +124,20 @@ public class Request extends BaseRequest{
             Assert.assertEquals(authorResponseBody, authorCheckResponse.prettyPrint());
         }
 
-        public static void ReadOnlyId() {
+        public static void verifyIDReadOnly() {
+
+            String putRequestID = "61"; //Read-Only
+            String putRequestTitle = "Lorem Ipsum";
+            String putRequestAuthor = "Dolor Sit Amet";
+
+            JSONObject putRequestParams = new JSONObject();
+            putRequestParams.put("id", putRequestID);
+            putRequestParams.put("title", putRequestTitle);
+            putRequestParams.put("author",putRequestAuthor);
 
             Response response = given()
                     .headers(headersMapping())
-                    .body("{ \n" +
-                            "  \"id\": 61, \n" +
-                            "  \"author\": \"John Smith\", \n" +
-                            "  \"title\": \"Reliability of late night deployments\" \n" +
-                            "}")
+                    .body(putRequestParams.toString())
                     .log()
                     .all()
                     .when()
@@ -140,7 +150,7 @@ public class Request extends BaseRequest{
 
         }
 
-        public static String newBook() {
+        public static String verifyCreateNewBook() {
 
 
             Response addBooking = given()
